@@ -36,12 +36,26 @@ function createCerealBox() {
 var cube = createCerealBox();
 scene.add(cube);
 
+function handleInput(deltaTime) {
+  var moveSpeed = 2 * deltaTime;
+  if (key.isPressed('a')) {
+    cube.rotation.y -= moveSpeed;
+  }
+  if (key.isPressed('d')) {
+    cube.rotation.y += moveSpeed;
+  }
+  if (key.isPressed('s')) {
+    cube.rotation.x += moveSpeed;
+  }
+  if (key.isPressed('w')) {
+    cube.rotation.x -= moveSpeed;
+  }
+}
 
 // Main render frame function
 // deltaTime is time in ms since last frame was drawn
 function renderFrame (deltaTime) {
-  cube.rotation.x += 2 * deltaTime;
-  cube.rotation.y += 2 * deltaTime;
+  handleInput(deltaTime);
 
   renderer.render(scene, camera);
 };
