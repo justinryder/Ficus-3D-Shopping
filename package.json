@@ -4,7 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "gulp build",
+    "build:css": "gulp build:css",
+    "build:html": "gulp build:html",
+    "build:js": "gulp build:js",
+    "watch": "gulp watch",
+    "watch:css": "gulp watch:css",
+    "watch:html": "gulp watch:html",
+    "watch:js": "gulp watch:js"
   },
   "repository": {
     "type": "git",
@@ -22,14 +29,7 @@
     "gulp-sass": "^2.2.0",
     "merge-stream": "^1.0.0"
   },
-  "scripts": {
-  "build": "gulp build",
-  "build:css": "gulp build:css",
-  "build:html": "gulp build:html",
-  "build:js": "gulp build:js",
-  "watch": "gulp watch",
-  "watch:css": "gulp watch:css",
-  "watch:html": "gulp watch:html",
-  "watch:js": "gulp watch:js"
-}
+  "dependencies": {
+    "three": "^0.74.0"
+  }
 }
