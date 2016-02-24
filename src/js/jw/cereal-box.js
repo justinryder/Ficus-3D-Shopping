@@ -3,12 +3,10 @@ function CerealBox(boxDepth, boxHeight, boxWidth, brand) {
   this.boxHeight = boxHeight;
   this.boxWidth = boxWidth;
   this.brand = brand;
-}
-CerealBox.prototype = Object.create(Sprite3D.prototype);
-CerealBox.prototype.constructor = CerealBox;
-
-CerealBox.prototype.addTo = function(container) {
-  container.addChild(
+  
+  Sprite3D.call(this);
+  
+  this.addChild(
     new Sprite3D()
       .setClassName("boxFront " + this.brand)
       .setPosition(-1*(this.boxWidth/2), -1*(this.boxHeight/2), 0)
@@ -16,7 +14,7 @@ CerealBox.prototype.addTo = function(container) {
       .update()
   );
   
-  container.addChild(
+  this.addChild(
     new Sprite3D()
       .setClassName("boxRight " + this.brand)
       .setTransformOrigin( 0, 0 )
@@ -26,7 +24,7 @@ CerealBox.prototype.addTo = function(container) {
       .update()
   );
   
-  container.addChild(
+  this.addChild(
     new Sprite3D()
       .setClassName("boxLeft " + this.brand)
       .setTransformOrigin( 0, 0 )
@@ -36,7 +34,7 @@ CerealBox.prototype.addTo = function(container) {
       .update()
   );
   
-  container.addChild(
+  this.addChild(
     new Sprite3D()
       .setClassName("boxBack " + this.brand)
       .setTransformOrigin( 0, 0 )
@@ -46,7 +44,7 @@ CerealBox.prototype.addTo = function(container) {
       .update()
   );
   
-  container.addChild(
+  this.addChild(
     new Sprite3D()
       .setClassName("boxTop " + this.brand)
       .setTransformOrigin( 0, 0 )
@@ -57,7 +55,7 @@ CerealBox.prototype.addTo = function(container) {
       .update()
   );
   
-  container.addChild(
+  this.addChild(
     new Sprite3D()
       .setClassName("boxBottom " + this.brand)
       .setTransformOrigin( 0, 0 )
@@ -68,4 +66,5 @@ CerealBox.prototype.addTo = function(container) {
       .update()
   );
 }
-
+CerealBox.prototype = Object.create(Sprite3D.prototype);
+CerealBox.prototype.constructor = CerealBox;

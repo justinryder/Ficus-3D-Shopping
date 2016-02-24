@@ -11,8 +11,9 @@ function init() {
 	container = new Sprite3D().setZ(-500).update();
 	stage.addChild( container );
 
-  var cocoPops = new CocoPops();
-  cocoPops.addTo(container);
+  // container.addChild(new CocoPops());
+  container.addChild(new CornPops());
+  // container.addChild(new Shreddies());
 
   gameLoop(move);
 }
