@@ -21,7 +21,7 @@ function loadTexture(src) {
   return texture;
 }
 
-var catTexture = loadTexture('/img/catpattern.jpg');
+var catTexture = loadTexture('/img/cocopopsFull.png');
 
 function createCerealBox() {
   var geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -52,28 +52,8 @@ function handleInput(deltaTime) {
   }
 }
 
-// Main render frame function
-// deltaTime is time in ms since last frame was drawn
-function renderFrame (deltaTime) {
+gameLoop(function renderFrame (deltaTime) {
   handleInput(deltaTime);
 
   renderer.render(scene, camera);
-};
-
-/**
-* Render loop code below
-*/
-
-var _lastRenderTime = 0;
-function computeDeltaTime(time) {
-  var deltaTime = time - _lastRenderTime;
-  _lastRenderTime = time;
-  return deltaTime;
-}
-
-function renderLoop (time) {
-  var deltaTime = computeDeltaTime(time / 1000); // divide by 1000 to get time in seconds
-  renderFrame(deltaTime);
-  requestAnimationFrame(renderLoop);
-}
-requestAnimationFrame(renderLoop);
+});
