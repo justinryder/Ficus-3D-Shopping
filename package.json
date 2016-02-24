@@ -23,13 +23,13 @@
     "merge-stream": "^1.0.0"
   },
   "scripts": {
-  "build": "gulp build",
-  "build:css": "gulp build:css",
-  "build:html": "gulp build:html",
-  "build:js": "gulp build:js",
-  "watch": "gulp watch",
-  "watch:css": "gulp watch:css",
-  "watch:html": "gulp watch:html",
-  "watch:js": "gulp watch:js"
-}
+    "build": "gulp build",
+    "build:css": "gulp build:css",
+    "build:html": "gulp build:html",
+    "build:js": "gulp build:js",
+    "watch": "gulp watch",
+    "watch:css": "gulp watch:css",
+    "watch:html": "gulp watch:html",
+    "watch:js": "gulp watch:js"
+  }
 }

@@ -1,0 +1,37 @@
+/**
+ * Provides styles to create a 3D button look and feel
+ *
+ * @param  {list}        $colors colors for font, primary bg and secondary bg used to create button
+ * @param  {font-family} $font the font family to use
+ * @param  {size}        $font-size font size to use
+ */
+@mixin raisedButton ($colors, $font: Arial, $font-size: 1rem) {
+  // base styles
+  position: relative;
+	padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 10px;
+	font-size: $font-size;
+  font-family: $font;
+	text-decoration: none;
+  display: block;
+
+  // apply unique colors
+  color: nth($colors, 1);
+  background-color: nth($colors, 2);
+	border-bottom: 5px solid nth($colors, 3);
+	text-shadow: 0px -2px nth($colors, 3);
+
+  // state styles
+  &:hover {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.7);
+  }
+
+  &:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    border-bottom: 1px solid;
+    box-shadow: none;
+    text-shadow: 0px 2px nth($colors, 3);
+  }
+}

@@ -1,0 +1,116 @@
+/**
+ * Provides styles to create a 3D button look and feel
+ *
+ * @param  {list}        $colors colors for font, primary bg and secondary bg used to create button
+ * @param  {font-family} $font the font family to use
+ * @param  {size}        $font-size font size to use
+ */
+@import url(https://fonts.googleapis.com/css?family=Fredoka+One);
+@import url(https://fonts.googleapis.com/css?family=Bevan);
+* {
+  box-sizing: border-box; }
+
+body {
+  margin: 3em;
+  background-image: url(../img/cheap_diagonal_fabric.png);
+  background-repeat: repeat; }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-size: 1em; }
+
+h1, h2 {
+  font-family: 'Fredoka One', Arial, sans-serif;
+  color: #FFFFFF;
+  font-size: 3rem; }
+
+.title span {
+  display: block;
+  font-size: 10rem; }
+
+.text-shadow {
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15); }
+
+.text-inset {
+  background-color: #565656;
+  color: transparent;
+  text-shadow: 0px 2px 3px rgba(255, 255, 255, 0.5);
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text; }
+
+.things {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  width: 75vw;
+  margin-top: 3rem; }
+
+.things__thing {
+  padding: 0; }
+
+.things__button--one {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-family: "Fredoka One", Arial, sans-serif;
+  text-decoration: none;
+  display: block;
+  color: #FFFFFF;
+  background-color: #3498DB;
+  border-bottom: 5px solid #2980B9;
+  text-shadow: 0px -2px #2980B9; }
+  .things__button--one:hover {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.7); }
+  .things__button--one:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    border-bottom: 1px solid;
+    box-shadow: none;
+    text-shadow: 0px 2px #2980B9; }
+
+.things__button--two {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-family: "Fredoka One", Arial, sans-serif;
+  text-decoration: none;
+  display: block;
+  color: #FFFFFF;
+  background-color: #E74C3C;
+  border-bottom: 5px solid #BD3E31;
+  text-shadow: 0px -2px #BD3E31; }
+  .things__button--two:hover {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.7); }
+  .things__button--two:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    border-bottom: 1px solid;
+    box-shadow: none;
+    text-shadow: 0px 2px #BD3E31; }
+
+.things__button--three {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 10px;
+  font-size: 2rem;
+  font-family: "Fredoka One", Arial, sans-serif;
+  text-decoration: none;
+  display: block;
+  color: #FFFFFF;
+  background-color: #82BF56;
+  border-bottom: 5px solid #669644;
+  text-shadow: 0px -2px #669644; }
+  .things__button--three:hover {
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.7); }
+  .things__button--three:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    border-bottom: 1px solid;
+    box-shadow: none;
+    text-shadow: 0px 2px #669644; }
