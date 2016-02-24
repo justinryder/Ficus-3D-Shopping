@@ -5,8 +5,6 @@ var scene,
 
 function initScene() {
   scene = new THREE.Scene();
-  //camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  //camera.position.z = 5;
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
   camera.position.z = 250;
 
@@ -56,19 +54,37 @@ mtlLoader.load('male02_dds.mtl', function(materials) {
 });
 
 function handleInput(deltaTime) {
-  var moveSpeed = 2 * deltaTime;
-  if (key.isPressed('a')) {
-    cube.rotation.y -= moveSpeed;
-  }
-  if (key.isPressed('d')) {
-    cube.rotation.y += moveSpeed;
-  }
-  if (key.isPressed('s')) {
-    cube.rotation.x += moveSpeed;
-  }
-  if (key.isPressed('w')) {
-    cube.rotation.x -= moveSpeed;
-  }
+  var moveSpeed = 250 * deltaTime,
+			rotationSpeed = 0.5 * deltaTime;
+
+	if (key.isPressed('a')) {
+		cube.position.x -= moveSpeed;
+	}
+
+	if (key.isPressed('d')) {
+		cube.position.x += moveSpeed;
+	}
+
+	if (key.isPressed('w')) {
+		cube.position.z -= moveSpeed;
+	}
+
+	if (key.isPressed('s')) {
+		cube.position.z += moveSpeed;
+	}
+
+	if (key.isPressed('q')) {
+		cube.position.y -= moveSpeed;
+	}
+
+	if (key.isPressed('e')) {
+		cube.position.y += moveSpeed;
+	}
+
+	if (key.ctrl || key.shift) {
+		cube.rotation.y += mouse.dX * rotationSpeed;
+		cube.rotation.x += mouse.dY * rotationSpeed;
+	}
 }
 
 gameLoop(function renderFrame (deltaTime) {
