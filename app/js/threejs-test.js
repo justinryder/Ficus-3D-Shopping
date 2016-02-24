@@ -19,15 +19,16 @@ function computeDeltaTime(time) {
   return deltaTime;
 }
 
-var render = function (time) {
-  var deltaTime = computeDeltaTime(time / 1000); // divide by 1000 to get time in seconds
-
+function renderFrame (deltaTime) {
   cube.rotation.x += 4 * deltaTime;
   cube.rotation.y += 4 * deltaTime;
 
   renderer.render(scene, camera);
-
-  requestAnimationFrame(render);
 };
 
-requestAnimationFrame(render);
+function renderLoop (time) {
+  var deltaTime = computeDeltaTime(time / 1000); // divide by 1000 to get time in seconds
+  renderFrame(deltaTime);
+  requestAnimationFrame(renderLoop);
+}
+requestAnimationFrame(renderLoop);
