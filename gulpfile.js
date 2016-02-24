@@ -9,7 +9,7 @@ var gulp = require('gulp'),
 */
 
 function buildCss() {
-  return gulp.src('./src/scss/**/*.scss')
+  return gulp.src('./src/sass/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./app/css'))
 }
@@ -53,7 +53,7 @@ gulp.task('build', function () {
 */
 
 function watchCss() {
-  gulp.watch('./src/scss/**/*.scss', ['build:css'])
+  gulp.watch('./src/sass/**/*.scss', ['build:css'])
 }
 
 gulp.task('watch:css', watchCss)
