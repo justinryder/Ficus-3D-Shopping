@@ -1,11 +1,22 @@
 var scene,
     camera,
-    renderer;
+    renderer,
+    cube;
 
 function initScene() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
+  //camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  //camera.position.z = 5;
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  camera.position.z = 250;
+
+  var ambient = new THREE.AmbientLight(0x444444);
+	scene.add(ambient);
+
+	var directionalLight = new THREE.DirectionalLight(0xffeedd);
+	directionalLight.position.set(0, 0, 1).normalize();
+	scene.add(directionalLight);
+
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -13,28 +24,36 @@ function initScene() {
 }
 initScene();
 
-function loadTexture(src) {
-  var texture = new THREE.TextureLoader().load(src);
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(1, 1);
-  return texture;
-}
+var onProgress = function (xhr) {
+  if (xhr.lengthComputable) {
+    var percentComplete = xhr.loaded / xhr.total * 100;
+    console.log(Math.round(percentComplete, 2) + '% downloaded');
+  }
+};
 
-var catTexture = loadTexture('/img/cocopopsFull.png');
+var onError = function (xhr) { };
 
-function createCerealBox() {
-  var geometry = new THREE.BoxGeometry(1, 1, 1);
-  var material = new THREE.MeshBasicMaterial({
-    color: '0xFFFFFF',
-    map: catTexture
-  });
-  var cube = new THREE.Mesh(geometry, material);
-  return cube;
-}
+THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 
-var cube = createCerealBox();
-scene.add(cube);
+var mtlLoader = new THREE.MTLLoader();
+mtlLoader.setBaseUrl('obj/male02/');
+mtlLoader.setPath('obj/male02/');
+mtlLoader.load('male02_dds.mtl', function(materials) {
+
+  materials.preload();
+
+  var objLoader = new THREE.OBJLoader();
+  objLoader.setMaterials(materials);
+  objLoader.setPath('obj/male02/');
+  objLoader.load('male02.obj', function (object) {
+    cube = object;
+
+    object.position.y = - 95;
+    scene.add(object);
+
+  }, onProgress, onError);
+
+});
 
 function handleInput(deltaTime) {
   var moveSpeed = 2 * deltaTime;
