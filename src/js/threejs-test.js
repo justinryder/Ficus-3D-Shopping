@@ -60,34 +60,44 @@ THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 //
 // });
 
-function loadObj(path, objName, mtlName, callback) {
+function loadObjAndMtl(path, objName, mtlName, callback) {
   var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setBaseUrl(path);
   mtlLoader.setPath(path);
   mtlLoader.load(mtlName, function(materials) {
     materials.preload();
-    var objLoader = new THREE.OBJLoader();
-    objLoader.setMaterials(materials);
-    objLoader.setPath(path);
-    objLoader.load(objName, callback, onProgress, onError);
+    loadObj(path, objName, materials, callback);
+    // var objLoader = new THREE.OBJLoader();
+    // objLoader.setMaterials(materials);
+    // objLoader.setPath(path);
+    // objLoader.load(objName, callback, onProgress, onError);
   });
 }
 
-loadObj('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
+function loadObj(path, objName, materials, callback) {
+  var objLoader = new THREE.OBJLoader();
+  if (materials) {
+    objLoader.setMaterials(materials);
+  }
+  objLoader.setPath(path);
+  objLoader.load(objName, callback, onProgress, onError);
+}
+
+loadObjAndMtl('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
   obj.position.y = - 95;
   obj.rotation.y = THREE.Math.degToRad(180);
   dude = obj;
   scene.add(obj);
+
+  loadObj('obj/cart_obj/', 'cart.obj', null, function (cart) {
+    obj.add(cart);
+    cart.position.z = 100;
+  });
 });
 
-loadObj('obj/Shelf3/', 'Shelf3.obj', 'Shelf3.mtl', function (obj) {
-  obj.position.y = - 95;
-  obj.position.z = -200;
-  scene.add(obj);
-});
 
 function addShelf(xOffset) {
-  loadObj('obj/Shelf3/', 'Shelf3.obj', 'Shelf3.mtl', function (obj) {
+  loadObjAndMtl('obj/Shelf3/', 'Shelf3.obj', 'Shelf3.mtl', function (obj) {
     obj.position.x = xOffset || 0;
     obj.position.y = - 95;
     obj.position.z = -200;
@@ -101,11 +111,9 @@ addShelf(0);
 addShelf(100);
 addShelf(200);
 
-function cameraFollow(obj) {
-  var localOffset = new THREE.Vector3(-20, 200, -200);
-  var localLookPoint = new THREE.Vector3(-20, 150, 0)
-  camera.position.copy(localOffset.applyMatrix4(obj.matrix));
-  camera.lookAt(localLookPoint.applyMatrix4(obj.matrix));
+function follow(obj, toFollow, offset, lookPoint) {
+  obj.position.copy(offset.applyMatrix4(toFollow.matrix));
+  obj.lookAt(lookPoint.applyMatrix4(toFollow.matrix));
 }
 
 function handleInput(deltaTime) {
@@ -145,7 +153,8 @@ function handleInput(deltaTime) {
 gameLoop(function renderFrame (deltaTime) {
   if (dude) {
     handleInput(deltaTime);
-    cameraFollow(dude);
+    //cameraFollow(dude);
+    follow(camera, dude, new THREE.Vector3(-30, 200, -200), new THREE.Vector3(-30, 150, 0));
   }
 
   renderer.render(scene, camera);
