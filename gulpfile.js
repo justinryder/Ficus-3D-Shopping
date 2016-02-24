@@ -40,12 +40,20 @@ function buildJs() {
 
 gulp.task('build:js', buildJs)
 
+function buildObj() {
+  return gulp.src('./src/obj/**/*')
+  .pipe(gulp.dest('./app/obj'))
+}
+
+gulp.task('build:obj', buildObj)
+
 gulp.task('build', function () {
   return mergeStream(
     buildCss(),
     buildHtml(),
     buildImg(),
-    buildJs())
+    buildJs(),
+    buildObj())
 });
 
 /**
@@ -76,11 +84,18 @@ function watchJs() {
 
 gulp.task('watch:js', watchJs)
 
+function watchObj() {
+  gulp.watch('./src/obj/**/*', ['build:obj'])
+}
+
+gulp.task('watch:obj', watchObj)
+
 gulp.task('watch', function () {
   watchCss()
   watchHtml()
   watchImg()
   watchJs()
+  watchObj()
 })
 
 /**
