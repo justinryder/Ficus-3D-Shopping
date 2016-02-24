@@ -1,3 +1,7 @@
+var stage,
+	container, 
+	t = 0;
+
 function init() {
 	
 	// 1. create the "stage" (root container)
@@ -55,4 +59,15 @@ function init() {
 	// (should be done using requestAnimationFrame, but this page tries to keep the code very simple)
 	setInterval( move, 1000 / 40 );
 	
+}	
+
+function move() {
+	// increment the t value, used for angle calculation
+	t += .05;
+	
+	// rotate the container around the X and Y axis, then apply these transformations
+	container
+		.rotateY( -3 )
+		.setRotationX( Math.cos(t) * 15 - 20 )
+		.update();
 }
