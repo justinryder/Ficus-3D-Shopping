@@ -10,10 +10,21 @@ function init() {
 	// 2. create the container that will be used to rotate its children, and add it to the stage
 	container = new Sprite3D().setZ(-500).update();
 	stage.addChild( container );
-
-  // container.addChild(new CocoPops());
-  container.addChild(new CornPops());
-  // container.addChild(new Shreddies());
+  
+  // Row of Shreddies
+  container.addChild(new Shreddies()).setPosition(0, -1300, -750).update();
+  container.addChild(new Shreddies()).setPosition(1000, -1300, -750).update();
+  container.addChild(new Shreddies()).setPosition(-1000, -1300, -750).update();
+  
+  // Row of CornPops
+  container.addChild(new CornPops()).setPosition(0, 0, -750).update();
+  container.addChild(new CornPops()).setPosition(900, 0, -750).update();
+  container.addChild(new CornPops()).setPosition(-900, 0, -750).update();
+  
+  // Row of CocoPops
+  container.addChild(new CocoPops()).setPosition(0, 1300, -750).update();
+  container.addChild(new CocoPops()).setPosition(1000, 1300, -750).update();
+  container.addChild(new CocoPops()).setPosition(-1000, 1300, -750).update();
 
   gameLoop(move);
 }
