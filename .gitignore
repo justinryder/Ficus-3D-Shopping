@@ -31,5 +31,7 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
-app/
-app/css/jw.css
+app/*
+.sass-cache/*
+app/css/site.css
+app/jw.html

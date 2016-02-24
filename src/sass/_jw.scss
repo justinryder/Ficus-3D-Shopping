@@ -8,52 +8,127 @@ html.jw {
     padding: 0px;
     overflow: hidden;
   }
-
-  .boxFront {
-    background: url('/img/jw/cocopopsFront.png') 0px 0px;
-    width: 900px;
-    height: 1172px;
+  
+  $cocopopsDepth: 280px;
+  $cocopopsHeight: 1172px;
+  $cocopopsWidth: 900px;
+  
+  /* CocoPops */
+  .boxFront.cocopops {
+    background: url('/img/jw/CocoPops/cocopopsFront.png') 0px 0px;
+    width: $cocopopsWidth;
+    height: $cocopopsHeight;
   }
 
-  .boxRight {
-    background: url('/img/jw/cocopopsSideRight.png') 0px 0px;
-    width: 280px;
-    height: 1172px;
+  .boxRight.cocopops {
+    background: url('/img/jw/CocoPops/cocopopsSideRight.png') 0px 0px;
+    width: $cocopopsDepth;
+    height: $cocopopsHeight;
   }
 
-  .boxLeft {
-    background: url('/img/jw/cocopopsSideLeft.png') 0px 0px;
-    width: 280px;
-    height: 1172px;
+  .boxLeft.cocopops {
+    background: url('/img/jw/CocoPops/cocopopsSideLeft.png') 0px 0px;
+    width: $cocopopsDepth;
+    height: $cocopopsHeight;
   }
 
-  .boxBack {
-    background: url('/img/jw/cocopopsBack.png') 0px 0px;
-    width: 900px;
-    height: 1172px;
+  .boxBack.cocopops {
+    background: url('/img/jw/CocoPops/cocopopsBack.png') 0px 0px;
+    width: $cocopopsWidth;
+    height: $cocopopsHeight;
   }
 
-  .boxTop {
-    background: url('/img/jw/cocopopsTop-revised.png') 0px 0px;
-    width: 900px;
-    height: 280px;
+  .boxTop.cocopops {
+    background: url('/img/jw/CocoPops/cocopopsTop-revised.png') 0px 0px;
+    width: $cocopopsWidth;
+    height: $cocopopsDepth;
   }
 
-  .boxBottom {
-    background: url('/img/jw/cocopopsBottom-revised.png') 0px 0px;
-    width: 900px;
-    height: 280px;
+  .boxBottom.cocopops {
+    background: url('/img/jw/CocoPops/cocopopsBottom-revised.png') 0px 0px;
+    width: $cocopopsWidth;
+    height: $cocopopsDepth;
+  }
+  
+  $cornpopsDepth: 419px;
+  $cornpopsHeight: 1213px;
+  $cornpopsWidth: 728px;
+  
+  /* CornPops */
+  .boxFront.cornpops {
+    background: url('/img/jw/CornPops/CornPopsFront.png') 0px 0px;
+    width: $cornpopsWidth;
+    height: $cornpopsHeight;
   }
 
-  .imageLeft {
-    background: url('/img/jw/cocopopsFront.png') 0px 0px;
-    width: 200px;
-    height: 500px;
+  .boxRight.cornpops {
+    background: url('/img/jw/CornPops/CornPopsRightSide.png') 0px 0px;
+    width: $cornpopsDepth;
+    height: $cornpopsHeight;
   }
 
-  .imageRight {
-    background: url('/img/jw/cocopopsFront.png') -200px 0px;
-    width: 200px;
-    height: 500px;
+  .boxLeft.cornpops {
+    background: url('/img/jw/CornPops/CornPopsLeftSide.png') 0px 0px;
+    width: $cornpopsDepth;
+    height: $cornpopsHeight;
+  }
+
+  .boxBack.cornpops {
+    background: url('/img/jw/CornPops/CornPopsBack.png') 0px 0px;
+    width: $cornpopsWidth;
+    height: $cornpopsHeight;
+  }
+
+  .boxTop.cornpops {
+    background: url('/img/jw/CornPops/CornPopsTop-revised.png') 0px 0px;
+    width: $cornpopsWidth;
+    height: $cornpopsDepth;
+  }
+
+  .boxBottom.cornpops {
+    background: url('/img/jw/CornPops/CornPopsBottom-revised.png') 0px 0px;
+    width: $cornpopsWidth;
+    height: $cornpopsDepth;
+  }
+  
+  $shreddiesDepth: 280px;
+  $shreddiesHeight: 1213px;
+  $shreddiesWidth: 729px;
+  
+  /* Shreddies */
+  .boxFront.shreddies {
+    background: url('/img/jw/Shreddies/ShreddiesFront-revised.png') 0px 0px;
+    width: $shreddiesWidth;
+    height: $shreddiesHeight;
+  }
+
+  .boxRight.shreddies {
+    background: url('/img/jw/Shreddies/ShreddiesRightSide.png') 0px 0px;
+    width: $shreddiesDepth;
+    height: $shreddiesHeight;
+  }
+
+  .boxLeft.shreddies {
+    background: url('/img/jw/Shreddies/ShreddiesLeftSide-revised.png') 0px 0px;
+    width: $shreddiesDepth;
+    height: $shreddiesHeight;
+  }
+
+  .boxBack.shreddies {
+    background: url('/img/jw/Shreddies/ShreddiesBack-revised.png') 0px 0px;
+    width: $shreddiesWidth;
+    height: $shreddiesHeight;
+  }
+
+  .boxTop.shreddies {
+    background: url('/img/jw/Shreddies/ShreddiesTop.png') 0px 0px;
+    width: $shreddiesWidth;
+    height: $shreddiesDepth;
+  }
+
+  .boxBottom.shreddies {
+    background: url('/img/jw/Shreddies/ShreddiesBottom.png') 0px 0px;
+    width: $shreddiesWidth;
+    height: $shreddiesDepth;
   }
 }

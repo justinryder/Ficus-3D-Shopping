@@ -1,81 +1,83 @@
-.productView {
-  -webkit-perspective: 800;
-  -webkit-perspective-origin: 50% 200px;
-  perspective: 800;
-  perspective-origin: 50% 200px;
+// taken from https://css-tricks.com/snippets/sass/px-to-em-functions/
+@function em-calc($pixels, $context: 16px) {
+  @return #{$pixels/$context}em;
 }
 
-.productBox {
+@mixin productBox ($imageMap, $basePath: '../img/') {
+  $boxWidth: image-width($basePath + map-get($imageMap, front));
+  $boxHeight: image-height($basePath + map-get($imageMap, front));
+  $boxDepth: image-width($basePath + map-get($imageMap, left));
+  $boxSideZOffset: $boxDepth / 2;
+  $rightSideZOffset: $boxWidth - $boxDepth / 2;
+  $bottomSideZOffset: $boxHeight - $boxDepth / 2;
+
+  // convert values to ems for easy scaling
+  $emWidth: em-calc($boxWidth);
+  $emHeight: em-calc($boxHeight);
+  $emDepth: em-calc($boxDepth);
+  $emZOffset: em-calc($boxSideZOffset);
+  $emRightZOffset: em-calc($rightSideZOffset);
+  $emBottomZOffset: em-calc($bottomSideZOffset);
+
+  width: $emWidth;
+  height: $emHeight;
+
   position: relative;
-  margin: 75px auto;
-  width:385px;
-  height:550px;
-  -webkit-transition: -webkit-transform 10ms linear;
-  -webkit-transform-style: preserve-3d;
-  -webkit-transform: rotateX(-20deg) rotateY(25deg);
   transition: 10ms linear;
   transform-style: preserve-3d;
-  transform: rotateX(-20deg) rotateY(25deg);
-}
+  // transform: rotateX(-20deg) rotateY(25deg);
 
-.productBox__side {
-  -webkit-backface-visibility: hidden;
-  -webkit-box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.4);
-}
+  .productBox__side {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 
-.productBox__side--front,
-.productBox__side--back { // front/back
-  position:absolute;
-  height: 550px;
-  width: 385px;
-}
+  .productBox__side--front,
+  .productBox__side--back {
+    width: $emWidth;
+    height: $emHeight;
+  }
 
-.productBox__side--left,
-.productBox__side--right {  // sides
-  position:absolute;
-  height: 550px;
-  width: 120px;
-}
+  .productBox__side--left,
+  .productBox__side--right {
+    height: $emHeight;
+    width: $emDepth;
+  }
 
-.productBox__side--top,
-.productBox__side--bottom { // top / bottom
-  position:absolute;
-  height: 120px;
-  width: 385px;
-}
+  .productBox__side--top,
+  .productBox__side--bottom {
+    height: $emDepth;
+    width: $emWidth;
+  }
 
-.productBox__side--top {
-  -webkit-transform: rotateX(90deg) translateZ(60px);
-  transform: rotateX(90deg) translateZ(60px);
-  background: #E3912D url(http://i.minus.com/jbkGrJOK5HLaMl.jpg) no-repeat;
-}
+  .productBox__side--top {
+    transform: rotateX(90deg) translateZ($emZOffset);
+    background-image: url($basePath + map-get($imageMap, top));
+  }
 
-.productBox__side--front {
-  -webkit-transform: translateZ(60px);
-  transform: translateZ(60px);
-  background: #E3912D url(http://i.minus.com/jWk1M8OA7lNmN.jpg) no-repeat;
-}
+  .productBox__side--front {
+    transform: translateZ($emZOffset);
+    background-image: url($basePath + map-get($imageMap, front));
+  }
 
-.productBox__side--right {
-  -webkit-transform: rotateY(90deg) translateZ(322px);
-  transform: rotateY(90deg) translateZ(322px);
-  background: #E3912D url(http://i.minus.com/jrJrBUh8FiYVx.jpg) no-repeat;
-}
+  .productBox__side--right {
+    transform: rotateY(90deg) translateZ($emRightZOffset);
+    background-image: url($basePath + map-get($imageMap, right));
+  }
 
-.productBox__side--left {
-  -webkit-transform: rotateY(-90deg) translateZ(60px);
-  transform: rotateY(-90deg) translateZ(60px);
-  background: #E3912D url(http://i.minus.com/jNMeSf4jkgEtf.jpg) no-repeat;
-}
+  .productBox__side--left {
+    transform: rotateY(-90deg) translateZ($emZOffset);
+    background-image: url($basePath + map-get($imageMap, left));
+  }
 
-.productBox__side--back {
-  -webkit-transform: rotateY(180deg) translateZ(60px);
-  transform: rotateY(180deg) translateZ(60px);
-  background: #E3912D url(http://i.minus.com/jb0Dp66XsiToKr.jpg) no-repeat;
-}
+  .productBox__side--back {
+    transform: rotateY(180deg) translateZ($emZOffset);
+    background-image: url($basePath + map-get($imageMap, back));
+  }
 
-.productBox__side--bottom {
-  -webkit-transform: rotateX(-90deg) translateZ(487px) rotate(180deg);
-  transform: rotateX(-90deg) translateZ(487px) rotate(180deg);
-  background: #E3912D url(http://i.minus.com/j1SOuuKblzaOU.jpg) no-repeat;
+  .productBox__side--bottom {
+    transform: rotateX(-90deg) translateZ($emBottomZOffset) rotate(180deg);
+    background-image: url($basePath + map-get($imageMap, bottom));
+  }
 }
