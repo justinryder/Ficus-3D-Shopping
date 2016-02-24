@@ -1,0 +1,10 @@
+newmtl wrapper
+d 1
+Ns 0.7
+Ni 0
+Ka 0 0 0
+Kd 1 1 1
+Ks 0.501961 0.501961 0.501961
+Km 0
+map_Kd /Maps/CornPops.png
+

@@ -99,7 +99,7 @@ loadObjAndMtl('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
 function addShelf(xOffset) {
   loadObjAndMtl('obj/Shelf3/', 'Shelf3.obj', 'Shelf3.mtl', function (obj) {
     obj.position.x = xOffset || 0;
-    obj.position.y = - 95;
+    obj.position.y = -95;
     obj.position.z = -200;
     scene.add(obj);
   });
@@ -110,6 +110,22 @@ addShelf(-100);
 addShelf(0);
 addShelf(100);
 addShelf(200);
+
+function addCereal(name, xOffset, yOffset) {
+  loadObjAndMtl('obj/3dCerealBoxes/' + name + '/', name + '.obj', name + '.mtl', function (obj) {
+    obj.position.x = xOffset || 0;
+    obj.position.y = yOffset || 0;
+    obj.position.z = -200;
+    obj.position
+    scene.add(obj);
+  });
+}
+
+addCereal('CocoPops', -200, 5);
+addCereal('CocoPops', -100, 5);
+addCereal('CocoPops', 0, 5);
+addCereal('CocoPops', 100, 5);
+addCereal('CocoPops', 200, 5);
 
 function follow(obj, toFollow, offset, lookPoint) {
   obj.position.copy(offset.applyMatrix4(toFollow.matrix));
