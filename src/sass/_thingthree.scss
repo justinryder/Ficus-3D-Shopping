@@ -1,0 +1,23 @@
+.productShelf {
+  // -webkit-perspective: 800;
+  // -webkit-perspective-origin: 50% 200px;
+  // perspective: 800;
+  // perspective-origin: 50% 200px;
+  font-size: 5px;
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+}
+
+$productImages--cornpops: (
+  front: 'CornPopsFront.png',
+  back: 'CornPopsBack.png',
+  left: 'CornPopsLeftSide.png',
+  right: 'CornPopsRightSide.png',
+  top: 'CornPopsTop.png',
+  bottom: 'CornPopsBottom.png'
+);
+
+.productBox--cornpops {
+  @include productBox($productImages--cornpops);
+}

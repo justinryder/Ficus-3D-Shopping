@@ -33,3 +33,5 @@ node_modules
 .node_repl_history
 app/*
 .sass-cache/*
+app/css/site.css
+app/jw.html
