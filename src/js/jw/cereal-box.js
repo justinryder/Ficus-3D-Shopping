@@ -1,5 +1,4 @@
 function CerealBox(boxDepth, boxHeight, boxWidth, brand) {
-  console.log(boxDepth, boxHeight, boxWidth, brand);
   this.boxDepth = boxDepth;
   this.boxHeight = boxHeight;
   this.boxWidth = boxWidth;

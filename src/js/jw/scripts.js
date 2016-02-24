@@ -11,69 +11,8 @@ function init() {
 	container = new Sprite3D().setZ(-500).update();
 	stage.addChild( container );
 
-  var boxDepth = 280;
-  var boxHeight = 1172;
-  var boxWidth = 900;
-
-  container.addChild(
-    new Sprite3D()
-      .setClassName("boxFront")
-      .setPosition(-1*(boxWidth/2), -1*(boxHeight/2), 0)
-      .setRotateFirst(true)
-      .update()
-  );
-
-  container.addChild(
-    new Sprite3D()
-      .setClassName("boxRight")
-      .setTransformOrigin( 0, 0 )
-      .setPosition(0, -1*(boxHeight/2), (boxWidth/2))
-      .rotateY(90)
-      .setRotateFirst(true)
-      .update()
-  );
-
-  container.addChild(
-    new Sprite3D()
-      .setClassName("boxLeft")
-      .setTransformOrigin( 0, 0 )
-      .setPosition(-280, -1*(boxHeight/2), (boxWidth/2))
-      .rotateY(-90)
-      .setRotateFirst(true)
-      .update()
-  );
-
-  container.addChild(
-    new Sprite3D()
-      .setClassName("boxBack")
-      .setTransformOrigin( 0, 0 )
-      .setPosition(-1*(boxWidth/2), -1*(boxHeight/2), boxDepth)
-      .rotateY(-180)
-      .setRotateFirst(true)
-      .update()
-  );
-
-  container.addChild(
-    new Sprite3D()
-      .setClassName("boxTop")
-      .setTransformOrigin( 0, 0 )
-      .setPosition(-1*(boxWidth/2), 0, (boxHeight/2))
-      .rotateX(90)
-      .rotateY(180)
-      .setRotateFirst(true)
-      .update()
-  );
-
-  container.addChild(
-    new Sprite3D()
-      .setClassName("boxBottom")
-      .setTransformOrigin( 0, 0 )
-      .setPosition(-1*(boxWidth/2), -1*boxDepth, boxHeight/2)
-      .rotateX(-90)
-      .rotateY(-180)
-      .setRotateFirst(true)
-      .update()
-  );
+  var cocoPops = new CocoPops();
+  cocoPops.addTo(container);
 
   gameLoop(move);
 }
