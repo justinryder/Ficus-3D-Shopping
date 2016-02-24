@@ -8,24 +8,44 @@ function init() {
 	stage = Sprite3D.createCenteredContainer();
 
 	// 2. create the container that will be used to rotate its children, and add it to the stage
-	container = new Sprite3D().setZ(-500).update();
+	container = new Sprite3D().setZ(-3500).update();
 	stage.addChild( container );
   
+  container.addChild(new Sprite3D()
+    .setClassName("backboard")
+    .setPosition(-2500, -2500, -1250)
+    .setRotateFirst(true)
+    .update()
+  );
+  
   // Row of Shreddies
-  container.addChild(new Shreddies()).setPosition(0, -1300, -750).update();
-  container.addChild(new Shreddies()).setPosition(1000, -1300, -750).update();
-  container.addChild(new Shreddies()).setPosition(-1000, -1300, -750).update();
+  container.addChild(new Shreddies()).setPosition(-1600, -1300, 0).update();
+  container.addChild(new Shreddies()).setPosition(-1600, -1300, -375).update();
+  container.addChild(new Shreddies()).setPosition(-750, -1300, 0).update();
+  container.addChild(new Shreddies()).setPosition(-750, -1300, -375).update();
+  container.addChild(new Shreddies()).setPosition(100, -1300, 0).update();
+  container.addChild(new Shreddies()).setPosition(100, -1300, -375).update();
+  container.addChild(new Shreddies()).setPosition(950, -1300, 0).update();
+  container.addChild(new Shreddies()).setPosition(950, -1300, -375).update();
   
   // Row of CornPops
-  container.addChild(new CornPops()).setPosition(0, 0, -750).update();
-  container.addChild(new CornPops()).setPosition(900, 0, -750).update();
-  container.addChild(new CornPops()).setPosition(-900, 0, -750).update();
+  container.addChild(new CornPops()).setPosition(-1600, 0, 0).update();
+  container.addChild(new CornPops()).setPosition(-1600, 0, -500).update();
+  container.addChild(new CornPops()).setPosition(-800, 0, 0).update();
+  container.addChild(new CornPops()).setPosition(-800, 0, -500).update();
+  container.addChild(new CornPops()).setPosition(0, 0, 0).update();
+  container.addChild(new CornPops()).setPosition(0, 0, -500).update();
+  container.addChild(new CornPops()).setPosition(800, 0, 0).update();
+  container.addChild(new CornPops()).setPosition(800, 0, -500).update();
   
   // Row of CocoPops
-  container.addChild(new CocoPops()).setPosition(0, 1300, -750).update();
-  container.addChild(new CocoPops()).setPosition(1000, 1300, -750).update();
-  container.addChild(new CocoPops()).setPosition(-1000, 1300, -750).update();
-
+  container.addChild(new CocoPops()).setPosition(-1500, 1300, 0).update();
+  container.addChild(new CocoPops()).setPosition(-1500, 1300, -375).update();
+  container.addChild(new CocoPops()).setPosition(-500, 1300, 0).update();
+  container.addChild(new CocoPops()).setPosition(-500, 1300, -375).update();
+  container.addChild(new CocoPops()).setPosition(500, 1300, 0).update();
+  container.addChild(new CocoPops()).setPosition(500, 1300, -375).update();
+  
   gameLoop(move);
 }
 
@@ -65,7 +85,7 @@ function move(deltaTime) {
 	if (key.isPressed('e')) {
 		y -= moveSpeed;
 	}
-
+  
 	if (key.ctrl) {
 		rotY = mouse.dX * rotationSpeed;
 		rotX = mouse.dY * rotationSpeed;
