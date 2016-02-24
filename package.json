@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/justinryder/Ficus-3D-Shopping#readme",
   "devDependencies": {
+    "gulp-compass": "^2.1.0",
     "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-sass": "^2.2.0",

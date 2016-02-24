@@ -1,7 +1,8 @@
 'use strict';
 
 var gulp = require('gulp'),
-    sass = require('gulp-sass'),
+    compass = require('gulp-compass'),
+    // sass = require('gulp-sass'),
     mergeStream = require('merge-stream')
 
 /**
@@ -10,8 +11,20 @@ var gulp = require('gulp'),
 
 function buildCss() {
   return gulp.src('./src/sass/**/*.scss')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./app/css'))
+      .pipe(compass({
+        css: './app/css',
+        sass: './src/sass',
+        image: './src/img'
+      }))
+      .pipe(gulp.dest('./app/css'));
+
+  // return gulp.src('./src/sass/**/*.scss')
+  //   .pipe(sass({
+  //         includePaths: [
+  //           'node_modules/compass-mixins/lib'
+  //         ]
+  //       }).on('error', sass.logError))
+  //   .pipe(gulp.dest('./app/css'))
 }
 
 gulp.task('build:css', buildCss)
