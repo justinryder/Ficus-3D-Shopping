@@ -31,7 +31,10 @@ function buildImg() {
 gulp.task('build:img', buildImg)
 
 function buildJs() {
-  return gulp.src('./src/js/**/*.js')
+  return gulp.src([
+    './src/js/**/*.js',
+    './node_modules/three/three.js'
+  ])
     .pipe(gulp.dest('./app/js'))
 }
 
