@@ -27,9 +27,11 @@
     "build:css": "gulp build:css",
     "build:html": "gulp build:html",
     "build:js": "gulp build:js",
+    "build:obj": "gulp build:obj",
     "watch": "gulp watch",
     "watch:css": "gulp watch:css",
     "watch:html": "gulp watch:html",
-    "watch:js": "gulp watch:js"
+    "watch:js": "gulp watch:js",
+    "watch:obj": "gulp watch:obj"
   }
 }
