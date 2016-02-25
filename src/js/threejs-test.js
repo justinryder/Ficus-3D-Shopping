@@ -1,14 +1,15 @@
 var scene,
     camera,
     renderer,
-    dude;
+    raycaster = new THREE.Raycaster(),
+    dude,
+    products = [],
+    focus = null,
+    oldFocuses = [];
 
 function initScene() {
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
-  //camera.position.set(0, 0, 200);
-  //camera.up = new THREE.Vector3(0, 1, 0);
-  //camera.lookAt(new THREE.Vector3(0, 500, 0));
 
   var ambient = new THREE.AmbientLight(0x444444);
 	scene.add(ambient);
@@ -16,7 +17,6 @@ function initScene() {
 	var directionalLight = new THREE.DirectionalLight(0xffeedd);
 	directionalLight.position.set(0, 0, 1).normalize();
 	scene.add(directionalLight);
-
 
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -35,31 +35,6 @@ var onError = function (xhr) { };
 
 THREE.Loader.Handlers.add(/\.dds$/i, new THREE.DDSLoader());
 
-// var mtlLoader = new THREE.MTLLoader();
-// // mtlLoader.setBaseUrl('obj/male02/');
-// // mtlLoader.setPath('obj/male02/');
-// // mtlLoader.load('male02_dds.mtl', function(materials) {
-// mtlLoader.setBaseUrl('obj/Shelf/');
-// mtlLoader.setPath('obj/Shelf/');
-// mtlLoader.load('Shelfs.mtl', function(materials) {
-//
-//   materials.preload();
-//
-//   var objLoader = new THREE.OBJLoader();
-//   objLoader.setMaterials(materials);
-//   // objLoader.setPath('obj/male02/');
-//   // objLoader.load('male02.obj', function (object) {
-//   objLoader.setPath('obj/Shelf/');
-//   objLoader.load('Shelfs.obj', function (object) {
-//     cube = object;
-//
-//     object.position.y = - 95;
-//     scene.add(object);
-//
-//   }, onProgress, onError);
-//
-// });
-
 function loadObjAndMtl(path, objName, mtlName, callback) {
   var mtlLoader = new THREE.MTLLoader();
   mtlLoader.setBaseUrl(path);
@@ -67,10 +42,6 @@ function loadObjAndMtl(path, objName, mtlName, callback) {
   mtlLoader.load(mtlName, function(materials) {
     materials.preload();
     loadObj(path, objName, materials, callback);
-    // var objLoader = new THREE.OBJLoader();
-    // objLoader.setMaterials(materials);
-    // objLoader.setPath(path);
-    // objLoader.load(objName, callback, onProgress, onError);
   });
 }
 
@@ -83,18 +54,6 @@ function loadObj(path, objName, materials, callback) {
   objLoader.load(objName, callback, onProgress, onError);
 }
 
-loadObjAndMtl('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
-  obj.position.y = - 95;
-  obj.rotation.y = THREE.Math.degToRad(180);
-  dude = obj;
-  scene.add(obj);
-
-  loadObj('obj/cart_obj/', 'cart.obj', null, function (cart) {
-    obj.add(cart);
-    cart.position.z = 100;
-  });
-});
-
 
 function addShelf(xOffset) {
   loadObjAndMtl('obj/Shelf3/', 'Shelf3.obj', 'Shelf3.mtl', function (obj) {
@@ -105,27 +64,54 @@ function addShelf(xOffset) {
   });
 }
 
-addShelf(-200);
-addShelf(-100);
-addShelf(0);
-addShelf(100);
-addShelf(200);
-
 function addCereal(name, xOffset, yOffset) {
   loadObjAndMtl('obj/3dCerealBoxes/' + name + '/', name + '.obj', name + '.mtl', function (obj) {
     obj.position.x = xOffset || 0;
     obj.position.y = yOffset || 0;
     obj.position.z = -200;
-    obj.position
+    obj.scale.multiplyScalar(1.5);
+    products.push(obj);
     scene.add(obj);
   });
 }
 
-addCereal('CocoPops', -200, 5);
-addCereal('CocoPops', -100, 5);
-addCereal('CocoPops', 0, 5);
-addCereal('CocoPops', 100, 5);
-addCereal('CocoPops', 200, 5);
+function loadObjectsAndAddToScene() {
+  loadObjAndMtl('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
+    obj.position.y = - 95;
+    obj.rotation.y = THREE.Math.degToRad(180);
+    dude = obj;
+    scene.add(obj);
+
+    loadObj('obj/cart_obj/', 'cart.obj', null, function (cart) {
+      obj.add(cart);
+      cart.position.z = 100;
+      cart.position.x = -20;
+    });
+  });
+
+  addShelf(-200);
+  addShelf(-100);
+  addShelf(0);
+  addShelf(100);
+  addShelf(200);
+
+  addCereal('CocoPops', -225, 5);
+  addCereal('CocoPops', -200, 5);
+  addCereal('CocoPops', -175, 5);
+  addCereal('CocoPops', -125, 5);
+  addCereal('CocoPops', -100, 5);
+  addCereal('CocoPops', -75, 5);
+  addCereal('CocoPops', -25, 5);
+  addCereal('CocoPops', 0, 5);
+  addCereal('CocoPops', 25, 5);
+  addCereal('CocoPops', 75, 5);
+  addCereal('CocoPops', 100, 5);
+  addCereal('CocoPops', 125, 5);
+  addCereal('CocoPops', 175, 5);
+  addCereal('CocoPops', 200, 5);
+  addCereal('CocoPops', 225, 5);
+}
+loadObjectsAndAddToScene();
 
 function follow(obj, toFollow, offset, lookPoint) {
   obj.position.copy(offset.applyMatrix4(toFollow.matrix));
@@ -166,11 +152,117 @@ function handleInput(deltaTime) {
   }
 }
 
+function moveTo(obj, pos, moveSpeed) {
+  var deltaPos = pos.sub(obj.position);
+  if (deltaPos.length() > 1) {
+    deltaPos.normalize();
+    obj.position.add(deltaPos.multiplyScalar(moveSpeed));
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function scaleTo(obj, scale, scaleSpeed) {
+  if (obj.scale.x < scale.x) {
+    obj.scale.add(new THREE.Vector3(scaleSpeed, scaleSpeed, scaleSpeed));
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function FocusProduct(product) {
+  var self = this,
+      initialPosition = product.position.clone(),
+      initialRotation = product.rotation.clone(),
+      initialScale = product.scale.clone(),
+      targetScale = initialScale.clone().multiplyScalar(2),
+      moveSpeed = 100,
+      scaleSpeed = 1,
+      targetOffsetFromDude = new THREE.Vector3(0, 0, 10),
+      movingTowardsDude = true;
+
+  console.log(initialPosition, product.position.clone(), product.position);
+
+  self.update = function(deltaTime) {
+    var offset = targetOffsetFromDude.clone();
+
+    // var dudeRotation = new THREE.Matrix4();
+    // dudeRotation.extractRotation(dude.matrix);
+    // offset.applyProjection(dudeRotation);
+    // offset = offset.applyMatrix4(dudeRotation);
+    // dudeRotation.multiplyVector3(offset);
+    // var targetPosition = dude.position.clone().add(offset);
+    product.position.set(dude.position);
+
+    // offset.applyQuaternion(dude.quaternion);
+    // console.log(offset.clone());
+    // var targetPosition = offset.add(dude.position).sub(product.position);
+
+    // console.log(product.position.clone());
+    // var targetPosition = dude.position.clone()
+    //   .add(offset)
+    //   .sub(product.position);
+    // offset.applyProjection(dude.matrix);
+
+    // offset.applyProjection(dudeRotation);
+    // console.log(offset.clone());
+    // offset.add(dude.position);
+    // offset.sub(product.position);
+    // var targetPosition = offset;
+
+    // var targetPosition = dude.position.clone();//.sub(product.position);
+    // moveTo(product, targetPosition, moveSpeed * deltaTime);
+
+    //scaleTo(product, targetScale, scaleSpeed * deltaTime);
+  };
+
+  self.updateToDie = function (deltaTime) {
+    console.log('updateToDie', initialPosition, initialScale);
+    if (moveTo(product, initialPosition, moveSpeed * deltaTime) &&
+        scaleTo(product, initialScale, scaleSpeed * deltaTime)) {
+      return true;
+    }
+
+    return false;
+  };
+}
+
+document.addEventListener('click', function(event) {
+  var mousePosition = {
+    x: mouse.nX,
+    y: mouse.nY
+  };
+  raycaster.setFromCamera(mousePosition, camera);
+  var intersects = raycaster.intersectObjects(products, true);
+  if (intersects.length) {
+    console.log('clicked', intersects);
+    if (focus) {
+      oldFocuses.push(focus);
+    }
+    focus = new FocusProduct(intersects[0].object);
+  } else {
+    console.log('clicked nothing');
+  }
+});
+
 gameLoop(function renderFrame (deltaTime) {
   if (dude) {
     handleInput(deltaTime);
     //cameraFollow(dude);
-    follow(camera, dude, new THREE.Vector3(-30, 200, -200), new THREE.Vector3(-30, 150, 0));
+    follow(camera, dude, new THREE.Vector3(-30, 200, -500), new THREE.Vector3(-30, 150, 0));
+  }
+
+  if (focus) {
+    focus.update(deltaTime);
+  }
+
+  for (var i = 0; i < oldFocuses.length; i++) {
+    if (oldFocuses[i].updateToDie(deltaTime)) {
+      oldFocuses.splice(i, 1);
+      i--;
+    }
   }
 
   renderer.render(scene, camera);
