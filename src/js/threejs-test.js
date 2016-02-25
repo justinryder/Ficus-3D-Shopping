@@ -3,6 +3,7 @@ var scene,
     renderer,
     raycaster = new THREE.Raycaster(),
     dude,
+    counter,
     products = [],
     focus = null,
     oldFocuses = [],
@@ -153,11 +154,14 @@ function loadFabulous() {
   loadObjAndMtl('obj/Fabulous/', 'Creature.obj', 'Creature.mtl', function (obj) {
     var wrapper = new THREE.Object3D();
     obj.rotation.x = THREE.Math.degToRad(-90);
-    obj.rotation.z = THREE.Math.degToRad(-45);
-    obj.scale.multiplyScalar(2);
+    obj.rotation.z = THREE.Math.degToRad(-75);
+    obj.scale.multiplyScalar(5);
     wrapper.add(obj);
 
-    wrapper.position.y = 110;
+    //wrapper.position.y = 110;
+    //wrapper.position.z = -200;
+    wrapper.position.x = 350;
+    wrapper.position.y = 50;
     wrapper.position.z = -200;
 
     scene.add(wrapper);
@@ -167,10 +171,11 @@ function loadFabulous() {
 
 function loadCounter() {
   loadObjAndMtl('obj/counter/', 'Cash machine retro N030114.obj', 'Cash machine retro N030114.obj.mtl', function (obj) {
-    obj.position.x = 300;
+    obj.position.x = 350;
     obj.position.z = -200;
     obj.rotation.y = THREE.Math.degToRad(180);
 
+    counter = obj;
     scene.add(obj);
     // console.log('load register', wrapper);
   });
@@ -414,6 +419,20 @@ $(function() {
     if (dude) {
       handleInput(deltaTime);
       follow(camera, dude, new THREE.Vector3(-30, 200, -200), new THREE.Vector3(-30, 150, 0));
+
+      if (counter) {
+        var distanceToCounter = counter.position.clone().sub(dude.position);
+        distanceToCounter.y = 0;
+        if (distanceToCounter.length() < 50 && cartItems.length) {
+          console.log('Checked out');
+          cartItems.forEach(function(item) {
+            products.splice(products.indexOf(item), 1);
+            scene.remove(item);
+            $cartTotal.text(0);
+          });
+          cartItems = [];
+        }
+      }
     }
 
     if (focus) {
