@@ -25,7 +25,9 @@
   position: relative;
   transition: 10ms linear;
   transform-style: preserve-3d;
-  box-shadow: 2px 0px 7px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  box-shadow: 30px 0px 10px rgba(0, 0, 0, 0.7);
+  transform: rotateX(0deg) rotateY(5deg);
   -webkit-transition: -webkit-transform 750ms linear;
 
   &.productBox--focused {
