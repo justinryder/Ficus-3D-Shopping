@@ -190,7 +190,9 @@ function FocusProduct(product) {
       moveSpeed = 100,
       scaleSpeed = 1,
       targetOffsetFromDude = new THREE.Vector3(-75, 150, 50),
-      movingTowardsDude = true;
+      moving = true,
+      targetOffsetFromCart = new THREE.Vector3(-20, 75, 75),
+      addingToCart = false;
 
   console.log('click product', product.position, dude.position);
 
@@ -198,20 +200,39 @@ function FocusProduct(product) {
     return obj == product;
   };
 
+  self.isInCart = function() {
+    return addingToCart;
+  };
+
+  self.addToCart = function() {
+    addingToCart = true;
+    moving = true;
+  };
+
   self.update = function(deltaTime) {
-    var offset = targetOffsetFromDude.clone();
+    var offset;
+
+    if (addingToCart) {
+      offset = targetOffsetFromCart.clone();
+    } else {
+      offset = targetOffsetFromDude.clone();
+    }
 
     var dudeRotation = new THREE.Matrix4();
     dudeRotation.extractRotation(dude.matrix);
     offset.applyProjection(dudeRotation);
     var targetPosition = offset.add(dude.position);
-    if (movingTowardsDude) {
-      movingTowardsDude = !moveTo(product, targetPosition, moveSpeed * deltaTime);
+    if (moving) {
+      moving = !moveTo(product, targetPosition, moveSpeed * deltaTime);
     } else {
       product.position.copy(targetPosition);
     }
 
-    scaleTo(product, targetScale, scaleSpeed * deltaTime);
+    if (addingToCart) {
+      scaleTo(product, initialScale, scaleSpeed * deltaTime * 2);
+    } else {
+      scaleTo(product, targetScale, scaleSpeed * deltaTime);
+    }
   };
 
   self.updateToDie = function (deltaTime) {
@@ -225,46 +246,64 @@ function FocusProduct(product) {
   };
 }
 
-document.addEventListener('click', function(event) {
-  var mousePosition = {
-    x: mouse.nX,
-    y: mouse.nY
-  };
-  raycaster.setFromCamera(mousePosition, camera);
-  var intersects = raycaster.intersectObjects(products, true);
-  if (intersects.length) {
-    var obj = intersects[0].object.parent;
-    console.log('clicked', intersects, obj);
+
+$(function() {
+  var $controlPanel = $('#controlPanel');
+
+  $controlPanel.click(function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (focus) {
-      if (focus.isFocusedOn(obj)) {
-        return;
+      focus.addToCart();
+    }
+  }).hide();
+
+  document.addEventListener('click', function(event) {
+    var mousePosition = {
+      x: mouse.nX,
+      y: mouse.nY
+    };
+    raycaster.setFromCamera(mousePosition, camera);
+    var intersects = raycaster.intersectObjects(products, true);
+    if (intersects.length) {
+      var obj = intersects[0].object.parent;
+      console.log('clicked', intersects, obj);
+      if (focus) {
+        oldFocuses.push(focus);
+
+        if (focus.isFocusedOn(obj)) {
+          focus = null;
+          return;
+        }
       }
 
-      oldFocuses.push(focus);
+      focus = new FocusProduct(intersects[0].object.parent);
+      $controlPanel.show();
+    } else {
+      console.log('clicked nothing');
+    }
+  });
+
+  gameLoop(function renderFrame (deltaTime) {
+    if (dude) {
+      handleInput(deltaTime);
+      follow(camera, dude, new THREE.Vector3(-30, 200, -200), new THREE.Vector3(-30, 150, 0));
     }
 
-    focus = new FocusProduct(intersects[0].object.parent);
-  } else {
-    console.log('clicked nothing');
-  }
-});
-
-gameLoop(function renderFrame (deltaTime) {
-  if (dude) {
-    handleInput(deltaTime);
-    follow(camera, dude, new THREE.Vector3(-30, 200, -200), new THREE.Vector3(-30, 150, 0));
-  }
-
-  if (focus) {
-    focus.update(deltaTime);
-  }
-
-  for (var i = 0; i < oldFocuses.length; i++) {
-    if (oldFocuses[i].updateToDie(deltaTime)) {
-      oldFocuses.splice(i, 1);
-      i--;
+    if (focus) {
+      focus.update(deltaTime);
     }
-  }
 
-  renderer.render(scene, camera);
+    for (var i = 0; i < oldFocuses.length; i++) {
+      if (oldFocuses[i].isInCart()) {
+        oldFocuses[i].update(deltaTime);
+      } else if (oldFocuses[i].updateToDie(deltaTime)) {
+        oldFocuses.splice(i, 1);
+        i--;
+      }
+    }
+
+    renderer.render(scene, camera);
+  });
 });
