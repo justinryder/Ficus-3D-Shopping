@@ -56,12 +56,13 @@ function loadObj(path, objName, materials, callback) {
   objLoader.load(objName, callback, onProgress, onError);
 }
 
-function loadSkyboxTextures(callback) {
+function loadSkyboxTextures(i, callback) {
   var loader = new THREE.TextureLoader();
   var dirs = ['lf', 'rt', 'up', 'dn', 'ft', 'bk'];
   var textures = [];
   for (var i = 0; i < 6; i++) {
-    loader.load('img/skybox/sincity_' + dirs[i] + '.png',
+    // loader.load('img/skybox/sincity_' + dirs[i] + '.png',
+    loader.load('img/skybox/sky.jpg',
       function(texture) {
         // console.log('loaded skybox texture');
         textures.push(texture);
@@ -75,10 +76,26 @@ function loadSkyboxTextures(callback) {
         // console.log('error loading skybox', xhr);
       });
   }
+  // loader.load('img/skybox/sincity_' + dirs[i] + '.png',
+  //   function(texture) {
+  //     console.log('loaded skybox texture');
+  //     i++;
+  //     textures.push(texture);
+  //     if (textures.length == 6 || i == 6) {
+  //       console.log('loaded all skybox textures');
+  //       callback(textures);
+  //     } else {
+  //       loadSkyboxTextures(i, callback);
+  //     }
+  //   }, function(xhr) {
+  //
+  //   }, function(xhr) {
+  //     console.log('error loading skybox', xhr);
+  //   });
 }
 
 function loadSkybox() {
-  loadSkyboxTextures(function(textures) {
+  loadSkyboxTextures(0, function(textures) {
     // console.log('creating skybox');
     var skyGeo = new THREE.CubeGeometry(2000, 2000, 2000);
     var materials = [];
