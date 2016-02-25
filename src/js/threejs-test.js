@@ -69,11 +69,25 @@ function addCereal(name, xOffset, yOffset) {
     obj.position.x = xOffset || 0;
     obj.position.y = yOffset || 0;
     obj.position.z = -200;
-    obj.scale.multiplyScalar(1.5);
+    obj.scale.multiplyScalar(1.4);
     products.push(obj);
     scene.add(obj);
     // console.log('load product', obj);
   });
+}
+
+function addShelfOfCereal(xOffset, yOffset) {
+  addCereal('CocoPops', -25 + xOffset, 5 + yOffset);
+  addCereal('CornPops', 0 + xOffset, 5 + yOffset);
+  addCereal('Shreddies', 25 + xOffset, 5 + yOffset);
+}
+
+function addFullShelfOfCereal(xOffset) {
+  addShelfOfCereal(xOffset, -68);
+  addShelfOfCereal(xOffset, -33);
+  addShelfOfCereal(xOffset, 0);
+  addShelfOfCereal(xOffset, 33);
+  addShelfOfCereal(xOffset, 68);
 }
 
 function loadObjectsAndAddToScene() {
@@ -96,21 +110,11 @@ function loadObjectsAndAddToScene() {
   addShelf(100);
   addShelf(200);
 
-  addCereal('CocoPops', -225, 5);
-  addCereal('CocoPops', -200, 5);
-  addCereal('CocoPops', -175, 5);
-  addCereal('CocoPops', -125, 5);
-  addCereal('CocoPops', -100, 5);
-  addCereal('CocoPops', -75, 5);
-  addCereal('CocoPops', -25, 5);
-  addCereal('CocoPops', 0, 5);
-  addCereal('CocoPops', 25, 5);
-  addCereal('CocoPops', 75, 5);
-  addCereal('CocoPops', 100, 5);
-  addCereal('CocoPops', 125, 5);
-  addCereal('CocoPops', 175, 5);
-  addCereal('CocoPops', 200, 5);
-  addCereal('CocoPops', 225, 5);
+  addFullShelfOfCereal(-200);
+  addFullShelfOfCereal(-100);
+  addFullShelfOfCereal(0);
+  addFullShelfOfCereal(100);
+  addFullShelfOfCereal(200);
 }
 loadObjectsAndAddToScene();
 
