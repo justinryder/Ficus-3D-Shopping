@@ -16,14 +16,20 @@
   <body onload="init()">
     <div id="order-info">
       <h1 class="title text-shadow">Order</h1>
-      <ul id="order-items"></ul>
-      <span>Subtotal: </span><span class="subtotal"></span>
-      <ul id="absurd-fees">
-        <li>3D Fee: $5.00</li>
-        <li>Delivery Charge: $5.00</li>
-        <li>Dev Donation: $10.00</li>
-      </ul>
-      <h2 class="subtitle text-inset">Total: </h2><span class="subtotal"></span>
+      <table id="items">
+        <tbody>
+          <tr class="absurd-fee">
+            <td>3D Fee:</td><td> $5.00</td>
+          </tr>
+          <tr class="absurd-fee">
+            <td>Delivery Charge:</td><td> $5.00</td>
+          </tr>
+          <tr class="absurd-fee">
+            <td>Dev Donation:</td><td> $10.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 class="subtitle text-inset">Total: $<span id="total">0</span>.00</h2>
     </div>
   </body>
 </html>

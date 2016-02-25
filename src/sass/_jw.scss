@@ -7,14 +7,35 @@ html.jw {
     margin: 0px;
     padding: 0px;
     overflow: hidden;
+    
+    /*
+    It's pretty late in the game
+    for me to try to understand or
+    explain why the body sits in
+    front of Sprite3D elements.
+    
+    Anyway, this fixes it.
+    */
+    height:1px;
+    width:1px;
+  }
+  
+  #stage {
+    z-index: -1;
   }
   
   #order-info {
-    background-color: rgba(177, 121, 67, .65);
+    background-color: rgba(177, 121, 67, 0.95);
+    border: 5px solid brown;
+    border-radius: 10px;
     margin-left: 25px;
     margin-top: 25px;
     padding: 25px;
     width: 300px;
+  }
+  
+  #order-info h1 {
+    margin-bottom:.5em;
   }
   
   #order-info ul {
@@ -23,10 +44,42 @@ html.jw {
     padding: 0;
   }
   
+  #order-info #items tr.absurd-fee {
+    display:none;
+  }
+  
+  #order-info tr td:nth-child(2) {
+    text-align:right;
+  }
+  
+  #order-info h2 {
+    margin-top:.5em;
+  }
+  
   .backboard {
     background: url('/img/jw/woodgrain.png') 0% 0%;
-    height:6000px;
-    width:4250px;
+    height:4500px;
+    width:8750px;
+  }
+  
+  .arrow_box {
+    position: relative;
+    background: #83CD05;
+  }
+  .arrow_box:after {
+    border: solid transparent;
+    border-color: rgba(131, 205, 5, 0);
+    border-right-color: #83CD05;
+    border-width: 450px;
+    content: " ";
+    cursor:pointer;
+    height: 0;
+    pointer-events: none;
+    position: absolute;
+    margin-top: -450px;
+    right: 100%;
+    top: 50%;
+    width: 0;
   }
   
   $cocopopsDepth: 280px;
@@ -36,6 +89,7 @@ html.jw {
   /* CocoPops */
   .boxFront.cocopops {
     background: url('/img/jw/CocoPops/cocopopsFront.png') 0px 0px;
+    cursor:pointer;
     width: $cocopopsWidth;
     height: $cocopopsHeight;
   }
@@ -79,6 +133,7 @@ html.jw {
     background: url('/img/jw/CornPops/CornPopsFront.png') 0px 0px;
     width: $cornpopsWidth;
     height: $cornpopsHeight;
+    cursor:pointer;
   }
 
   .boxRight.cornpops {
@@ -120,6 +175,7 @@ html.jw {
     background: url('/img/jw/Shreddies/ShreddiesFront-revised.png') 0px 0px;
     width: $shreddiesWidth;
     height: $shreddiesHeight;
+    cursor:pointer;
   }
 
   .boxRight.shreddies {
