@@ -23,15 +23,22 @@
   height: $emHeight;
 
   position: relative;
-  transition: 10ms linear;
+  -webkit-transition: 750ms linear;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform: rotateX(0deg) rotateY(5deg);
+  -webkit-backface-visibility: hidden;
+  transition: 750ms linear;
   transform-style: preserve-3d;
-  cursor: pointer;
-  box-shadow: 30px 0px 10px rgba(0, 0, 0, 0.7);
   transform: rotateX(0deg) rotateY(5deg);
-  -webkit-transition: -webkit-transform 750ms linear;
+  cursor: pointer;
+  box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.7);
 
   &.productBox--focused {
     box-shadow: none;
+
+    .productBox__side {
+      z-index: 999;
+    }
   }
 
   .productBox__side {
@@ -60,31 +67,37 @@
   }
 
   .productBox__side--top {
+    -webkit-transform: rotateX(90deg) translateZ($emZOffset);
     transform: rotateX(90deg) translateZ($emZOffset);
     background-image: url($basePath + map-get($imageMap, top));
   }
 
   .productBox__side--front {
+    -webkit-transform: translateZ($emZOffset);
     transform: translateZ($emZOffset);
     background-image: url($basePath + map-get($imageMap, front));
   }
 
   .productBox__side--right {
+    -webkit-transform: rotateY(90deg) translateZ($emRightZOffset);
     transform: rotateY(90deg) translateZ($emRightZOffset);
     background-image: url($basePath + map-get($imageMap, right));
   }
 
   .productBox__side--left {
+    -webkit-transform: rotateY(-90deg) translateZ($emZOffset);
     transform: rotateY(-90deg) translateZ($emZOffset);
     background-image: url($basePath + map-get($imageMap, left));
   }
 
   .productBox__side--back {
+    -webkit-transform: rotateY(180deg) translateZ($emZOffset);
     transform: rotateY(180deg) translateZ($emZOffset);
     background-image: url($basePath + map-get($imageMap, back));
   }
 
   .productBox__side--bottom {
+    -webkit-transform: rotateX(-90deg) translateZ($emBottomZOffset) rotate(180deg);
     transform: rotateX(-90deg) translateZ($emBottomZOffset) rotate(180deg);
     background-image: url($basePath + map-get($imageMap, bottom));
   }

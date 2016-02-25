@@ -4,7 +4,11 @@ body {
 }
 
 .scene {
-  width: 200%;
+  width: 2700px;
+  -webkit-transition: 750ms linear;
+  transition: 750ms linear;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .productDisplay {
@@ -13,31 +17,32 @@ body {
   padding-top: 30px;
   border: 3px solid #200F00;
   background: url('../img/woodgrain.png') repeat;
-  width: 40%;
+  width: 800px;
   float: left;
 
   &:not(:last-child) {
-    margin-right: 5%;
+    margin-right: 100px;
   }
 }
 
 .productShelf {
-  font-size: 3px;
+  font-size: 2px;
   padding: 0 50px 120px 50px;
   width: 100%;
-  height: 350px;
-
-  display: flex;
-  justify-content: space-around;
+  height: 238px;
 
   background-image: url('../img/ShelfFront.png');
   background-repeat: repeat-x;
   background-position: bottom;
-  background-size: 635px;
+  background-size: 450px;
 }
 
-.productBox + .productBox {
-  margin-left: 50px;
+.productBox {
+  display: inline-block;
+
+  & + .productBox {
+    margin-left: 50px;
+  }
 }
 
 $productImages--cornpops: (
@@ -74,7 +79,7 @@ $productImages--shreddies: (
 .productBox--cocopops {
   @include productBox($productImages--cocopops, '../img/jw/CocoPops/');
 
-  margin-top: 9px;
+  margin-top: 5px;
 }
 
 .productBox--shreddies {

@@ -2,32 +2,35 @@ window.ProductBox = function (hammertime) {
   var self = this;
 
   var xOrigin = 0,
-  xAngle = xOrigin;
+      xAngle = xOrigin;
 
   var yOrigin = 5,
-  yAngle = yOrigin;
+      yAngle = yOrigin;
 
   var xTranslateOrigin = 0,
-  xTranslate = xTranslateOrigin;
+      xTranslate = xTranslateOrigin;
 
   var yTranslateOrigin = 0,
-  yTranslate = yTranslateOrigin;
+      yTranslate = yTranslateOrigin;
 
   var scale = 1,
-  scaleOrigin = scale;
+      scaleOrigin = scale;
+
+  var zTraslateOrigin = 0,
+      zTraslate = zTraslateOrigin;
 
   var keyboardMoveRate = 10;
   var touchMoveRate = 5;
   var snapToOn = false;
   var $focusedProduct = null;
-  var focusedTraqball = null;
 
   function getCurrentTransformValues () {
     return "translateX(" + xTranslate + "%)" +
-    "translateY(" + yTranslate + "%)" +
-    "rotateX(" + xAngle + "deg) " +
-    "rotateY(" + yAngle + "deg) " +
-    "scale3d(" + scale + ", " + scale + ", " + scale + ")";
+            "translateY(" + yTranslate + "%)" +
+            "translateZ(" + zTraslate + ")" +
+            "rotateX(" + xAngle + "deg) " +
+            "rotateY(" + yAngle + "deg) " +
+            "scale3d(" + scale + ", " + scale + ", " + scale + ")";
   }
 
   // uses transalateX/Y to offset focused product based on position on shelf
@@ -58,6 +61,7 @@ window.ProductBox = function (hammertime) {
     // give slight angle to show off threedeeene  ss
     xAngle = -10;
     yAngle = 20;
+    zTraslate = '800px';
 
     determineFocusPosition();
     $focusedProduct.addClass("productBox--focused")
@@ -65,11 +69,6 @@ window.ProductBox = function (hammertime) {
       "z-index": "999",
       "-webkit-transform":  getCurrentTransformValues()
     });
-
-    // focusedTraqball = new Traqball({
-    //                             stage: $focusedProduct.parent()[0],
-    //                             axis: [xAngle, yAngle, 0]}
-    //                           );
   }
 
   // resets focused product by clearing its js-modified values
@@ -81,6 +80,7 @@ window.ProductBox = function (hammertime) {
       scale = scaleOrigin;
       xTranslate = xTranslateOrigin;
       yTranslate = yTranslateOrigin;
+      zTraslate = zTraslateOrigin;
 
       $focusedProduct.removeClass("productBox--focused")
       .css({
@@ -88,8 +88,6 @@ window.ProductBox = function (hammertime) {
         "-webkit-transform": getCurrentTransformValues()
       });
 
-      // focusedTraqball.disable();
-      // focusedTraqball = null;
       $focusedProduct = null;
     }
   }
@@ -221,10 +219,10 @@ window.ProductBox = function (hammertime) {
 
     switch (event.type) {
       case "pinchin":
-      newScale = scale + 0.05;
+      newScale = scale - 0.05;
       break;
       case "pinchout":
-      newScale = scale - 0.05;
+      newScale = scale + 0.05;
       break;
     }
 
