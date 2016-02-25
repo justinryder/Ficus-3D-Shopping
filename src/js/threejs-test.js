@@ -5,7 +5,8 @@ var scene,
     dude,
     products = [],
     focus = null,
-    oldFocuses = [];
+    oldFocuses = [],
+    cartItems = [];
 
 function initScene() {
   scene = new THREE.Scene();
@@ -110,11 +111,11 @@ function loadObjectsAndAddToScene() {
   addShelf(100);
   addShelf(200);
 
-  addFullShelfOfCereal(-200);
+  //addFullShelfOfCereal(-200);
   addFullShelfOfCereal(-100);
   addFullShelfOfCereal(0);
   addFullShelfOfCereal(100);
-  addFullShelfOfCereal(200);
+  //addFullShelfOfCereal(200);
 }
 loadObjectsAndAddToScene();
 
@@ -195,7 +196,7 @@ function FocusProduct(product) {
       scaleSpeed = 1,
       targetOffsetFromDude = new THREE.Vector3(-75, 150, 50),
       moving = true,
-      targetOffsetFromCart = new THREE.Vector3(-20, 75, 75),
+      targetOffsetFromCart = new THREE.Vector3(-30, 75, 75 - (cartItems.length * 10)),
       addingToCart = false;
 
   console.log('click product', product.position, dude.position);
@@ -211,6 +212,7 @@ function FocusProduct(product) {
   self.addToCart = function() {
     addingToCart = true;
     moving = true;
+    cartItems.push(product);
   };
 
   self.update = function(deltaTime) {
@@ -252,14 +254,17 @@ function FocusProduct(product) {
 
 
 $(function() {
-  var $controlPanel = $('#controlPanel');
+  var $cartTotal = $('#cartTotal'),
+      $addToCart = $('#addToCart');
 
-  $controlPanel.click(function(event) {
+  $addToCart.click(function(event) {
     event.preventDefault();
     event.stopPropagation();
 
     if (focus) {
       focus.addToCart();
+      $cartTotal.text(cartItems.length);
+      $addToCart.hide();
     }
   }).hide();
 
@@ -278,12 +283,13 @@ $(function() {
 
         if (focus.isFocusedOn(obj)) {
           focus = null;
+          $addToCart.hide();
           return;
         }
       }
 
-      focus = new FocusProduct(intersects[0].object.parent);
-      $controlPanel.show();
+      focus = new FocusProduct(obj);
+      $addToCart.show();
     } else {
       console.log('clicked nothing');
     }
