@@ -72,12 +72,13 @@ function addCereal(name, xOffset, yOffset) {
     obj.scale.multiplyScalar(1.5);
     products.push(obj);
     scene.add(obj);
+    // console.log('load product', obj);
   });
 }
 
 function loadObjectsAndAddToScene() {
   loadObjAndMtl('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
-    obj.position.y = - 95;
+    obj.position.y = -95;
     obj.rotation.y = THREE.Math.degToRad(180);
     dude = obj;
     scene.add(obj);
@@ -153,7 +154,7 @@ function handleInput(deltaTime) {
 }
 
 function moveTo(obj, pos, moveSpeed) {
-  var deltaPos = pos.sub(obj.position);
+  var deltaPos = pos.clone().sub(obj.position);
   if (deltaPos.length() > 1) {
     deltaPos.normalize();
     obj.position.add(deltaPos.multiplyScalar(moveSpeed));
@@ -164,8 +165,16 @@ function moveTo(obj, pos, moveSpeed) {
 }
 
 function scaleTo(obj, scale, scaleSpeed) {
-  if (obj.scale.x < scale.x) {
-    obj.scale.add(new THREE.Vector3(scaleSpeed, scaleSpeed, scaleSpeed));
+  var direction = scale.x - obj.scale.x;
+  var distance = Math.abs(direction);
+  var sign = Math.sign(direction);
+  if (distance > scaleSpeed) {
+    if (sign > 0) {
+      obj.scale.add(new THREE.Vector3(scaleSpeed, scaleSpeed, scaleSpeed));
+    }
+    if (sign < 0) {
+      obj.scale.sub(new THREE.Vector3(scaleSpeed, scaleSpeed, scaleSpeed));
+    }
     return false;
   } else {
     return true;
@@ -180,46 +189,33 @@ function FocusProduct(product) {
       targetScale = initialScale.clone().multiplyScalar(2),
       moveSpeed = 100,
       scaleSpeed = 1,
-      targetOffsetFromDude = new THREE.Vector3(0, 0, 10),
+      targetOffsetFromDude = new THREE.Vector3(-75, 150, 50),
       movingTowardsDude = true;
 
-  console.log(initialPosition, product.position.clone(), product.position);
+  console.log('click product', product.position, dude.position);
+
+  self.isFocusedOn = function(obj) {
+    return obj == product;
+  };
 
   self.update = function(deltaTime) {
     var offset = targetOffsetFromDude.clone();
 
-    // var dudeRotation = new THREE.Matrix4();
-    // dudeRotation.extractRotation(dude.matrix);
-    // offset.applyProjection(dudeRotation);
-    // offset = offset.applyMatrix4(dudeRotation);
-    // dudeRotation.multiplyVector3(offset);
-    // var targetPosition = dude.position.clone().add(offset);
-    product.position.set(dude.position);
+    var dudeRotation = new THREE.Matrix4();
+    dudeRotation.extractRotation(dude.matrix);
+    offset.applyProjection(dudeRotation);
+    var targetPosition = offset.add(dude.position);
+    if (movingTowardsDude) {
+      movingTowardsDude = !moveTo(product, targetPosition, moveSpeed * deltaTime);
+    } else {
+      product.position.copy(targetPosition);
+    }
 
-    // offset.applyQuaternion(dude.quaternion);
-    // console.log(offset.clone());
-    // var targetPosition = offset.add(dude.position).sub(product.position);
-
-    // console.log(product.position.clone());
-    // var targetPosition = dude.position.clone()
-    //   .add(offset)
-    //   .sub(product.position);
-    // offset.applyProjection(dude.matrix);
-
-    // offset.applyProjection(dudeRotation);
-    // console.log(offset.clone());
-    // offset.add(dude.position);
-    // offset.sub(product.position);
-    // var targetPosition = offset;
-
-    // var targetPosition = dude.position.clone();//.sub(product.position);
-    // moveTo(product, targetPosition, moveSpeed * deltaTime);
-
-    //scaleTo(product, targetScale, scaleSpeed * deltaTime);
+    scaleTo(product, targetScale, scaleSpeed * deltaTime);
   };
 
   self.updateToDie = function (deltaTime) {
-    console.log('updateToDie', initialPosition, initialScale);
+    // console.log('updateToDie', initialPosition, initialScale);
     if (moveTo(product, initialPosition, moveSpeed * deltaTime) &&
         scaleTo(product, initialScale, scaleSpeed * deltaTime)) {
       return true;
@@ -237,11 +233,17 @@ document.addEventListener('click', function(event) {
   raycaster.setFromCamera(mousePosition, camera);
   var intersects = raycaster.intersectObjects(products, true);
   if (intersects.length) {
-    console.log('clicked', intersects);
+    var obj = intersects[0].object.parent;
+    console.log('clicked', intersects, obj);
     if (focus) {
+      if (focus.isFocusedOn(obj)) {
+        return;
+      }
+
       oldFocuses.push(focus);
     }
-    focus = new FocusProduct(intersects[0].object);
+
+    focus = new FocusProduct(intersects[0].object.parent);
   } else {
     console.log('clicked nothing');
   }
@@ -250,8 +252,7 @@ document.addEventListener('click', function(event) {
 gameLoop(function renderFrame (deltaTime) {
   if (dude) {
     handleInput(deltaTime);
-    //cameraFollow(dude);
-    follow(camera, dude, new THREE.Vector3(-30, 200, -500), new THREE.Vector3(-30, 150, 0));
+    follow(camera, dude, new THREE.Vector3(-30, 200, -200), new THREE.Vector3(-30, 150, 0));
   }
 
   if (focus) {
