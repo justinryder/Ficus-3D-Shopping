@@ -429,6 +429,8 @@ $(function() {
             products.splice(products.indexOf(item), 1);
             scene.remove(item);
             $cartTotal.text(0);
+            var audio = new Audio('audio/cha-ching.mp3');
+            audio.play();
           });
           cartItems = [];
         }
