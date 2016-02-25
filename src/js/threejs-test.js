@@ -11,7 +11,7 @@ var scene,
 
 function initScene() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 4000);
 
   var ambient = new THREE.AmbientLight(0x444444);
 	scene.add(ambient);
@@ -56,6 +56,45 @@ function loadObj(path, objName, materials, callback) {
   objLoader.load(objName, callback, onProgress, onError);
 }
 
+function loadSkyboxTextures(callback) {
+  var loader = new THREE.TextureLoader();
+  var dirs = ['lf', 'rt', 'up', 'dn', 'ft', 'bk'];
+  var textures = [];
+  for (var i = 0; i < 6; i++) {
+    loader.load('img/skybox/sincity_' + dirs[i] + '.png',
+      function(texture) {
+        // console.log('loaded skybox texture');
+        textures.push(texture);
+        if (textures.length == 6) {
+          // console.log('loaded all skybox textures');
+          callback(textures);
+        }
+      }, function(xhr) {
+
+      }, function(xhr) {
+        // console.log('error loading skybox', xhr);
+      });
+  }
+}
+
+function loadSkybox() {
+  loadSkyboxTextures(function(textures) {
+    // console.log('creating skybox');
+    var skyGeo = new THREE.CubeGeometry(2000, 2000, 2000);
+    var materials = [];
+    textures.forEach(function(texture) {
+      materials.push(new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.BackSide
+      }));
+    });
+    var skyMat = new THREE.MeshFaceMaterial(materials);
+    var skyObj = new THREE.Mesh(skyGeo, skyMat);
+    scene.add(skyObj);
+    // console.log('skybox added to scene');
+  });
+}
+loadSkybox();
 
 function addShelf(xOffset) {
   loadObjAndMtl('obj/Shelf3/', 'Shelf3.obj', 'Shelf3.mtl', function (obj) {
