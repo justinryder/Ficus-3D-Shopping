@@ -6,7 +6,8 @@ var scene,
     products = [],
     focus = null,
     oldFocuses = [],
-    cartItems = [];
+    cartItems = [],
+    fullRotationInRads = THREE.Math.degToRad(360);
 
 function initScene() {
   scene = new THREE.Scene();
@@ -160,6 +161,28 @@ function moveTo(obj, pos, moveSpeed) {
     obj.position.add(deltaPos.multiplyScalar(moveSpeed));
     return false;
   } else {
+    obj.position.copy(pos);
+    return true;
+  }
+}
+
+function rotateTo(obj, rot, rotationSpeed) {
+  var direction = rot.y - obj.rotation.y;
+  if (direction > 0) {
+    while (direction >= fullRotationInRads) {
+      direction -= fullRotationInRads;
+    }
+  } else {
+    while (direction <= -fullRotationInRads) {
+      direction += fullRotationInRads;
+    }
+  }
+  var sign = Math.sign(direction);
+  if (Math.abs(direction) > rotationSpeed) {
+    obj.rotation.y += rotationSpeed * sign;
+    return false;
+  } else {
+    obj.rotation.copy(rot);
     return true;
   }
 }
@@ -177,6 +200,7 @@ function scaleTo(obj, scale, scaleSpeed) {
     }
     return false;
   } else {
+    obj.scale.copy(scale);
     return true;
   }
 }
@@ -188,9 +212,11 @@ function FocusProduct(product) {
       initialScale = product.scale.clone(),
       targetScale = initialScale.clone().multiplyScalar(2),
       moveSpeed = 100,
+      rotationSpeed = 1,
       scaleSpeed = 1,
       targetOffsetFromDude = new THREE.Vector3(-75, 150, 50),
       moving = true,
+      rotating = true,
       targetOffsetFromCart = new THREE.Vector3(-30, 75, 75 - (cartItems.length * 10)),
       addingToCart = false;
 
@@ -229,6 +255,15 @@ function FocusProduct(product) {
       product.position.copy(targetPosition);
     }
 
+    var targetRotation = dude.rotation.clone();
+    targetRotation.y -= THREE.Math.degToRad(180);
+
+    if (rotating) {
+      rotating = !rotateTo(product, targetRotation, rotationSpeed * deltaTime);
+    } else {
+      product.rotation.copy(targetRotation);
+    }
+
     if (addingToCart) {
       scaleTo(product, initialScale, scaleSpeed * deltaTime * 2);
     } else {
@@ -238,12 +273,11 @@ function FocusProduct(product) {
 
   self.updateToDie = function (deltaTime) {
     // console.log('updateToDie', initialPosition, initialScale);
-    if (moveTo(product, initialPosition, moveSpeed * deltaTime) &&
-        scaleTo(product, initialScale, scaleSpeed * deltaTime)) {
-      return true;
-    }
-
-    return false;
+    var dead = true;
+    dead = moveTo(product, initialPosition, moveSpeed * deltaTime) && dead;
+    dead = rotateTo(product, initialRotation, rotationSpeed * deltaTime) && dead;
+    dead = scaleTo(product, initialScale, scaleSpeed * deltaTime) && dead;
+    return dead;
   };
 }
 
