@@ -16,7 +16,7 @@ window.ProductBox = function (hammertime) {
   var scale = 1,
   scaleOrigin = scale;
 
-  var keyboardkeyboardMoveRate = 10;
+  var keyboardMoveRate = 10;
   var touchMoveRate = 5;
   var snapToOn = false;
   var $focusedProduct = null;
@@ -190,6 +190,10 @@ window.ProductBox = function (hammertime) {
   }
 
   function productPanHandler (event) {
+    if (!$focusedProduct) {
+      return;
+    }
+
     switch (event.type) {
       case "panup":
       xAngle = xAngle + touchMoveRate;
@@ -209,6 +213,10 @@ window.ProductBox = function (hammertime) {
   }
 
   function productPinchHandler (event) {
+    if (!$focusedProduct) {
+      return;
+    }
+
     var newScale;
 
     switch (event.type) {
@@ -228,8 +236,8 @@ window.ProductBox = function (hammertime) {
   }
 
   // keyboard controls for focused product
-  // key('up, down, left, right, ctrl+=, ctrl+-', smoothRotate);
-  // key('shift+up, shift+down, shift+left, shift+right', smoothRotate);
+  key('up, down, left, right, ctrl+=, ctrl+-', smoothRotate);
+  key('shift+up, shift+down, shift+left, shift+right', smoothRotate);
   key('ctrl+up, ctrl+down, ctrl+left, ctrl+right', smoothRotate);
   key('shift+enter', smoothRotate);
   key('esc', self.resetFocus);
