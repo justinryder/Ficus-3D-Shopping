@@ -149,6 +149,33 @@ function addFullShelfOfCereal(xOffset) {
   addShelfOfCereal(xOffset, 68);
 }
 
+function loadFabulous() {
+  loadObjAndMtl('obj/Fabulous/', 'Creature.obj', 'Creature.mtl', function (obj) {
+    var wrapper = new THREE.Object3D();
+    obj.rotation.x = THREE.Math.degToRad(-90);
+    obj.rotation.z = THREE.Math.degToRad(-45);
+    obj.scale.multiplyScalar(2);
+    wrapper.add(obj);
+
+    wrapper.position.y = 110;
+    wrapper.position.z = -200;
+
+    scene.add(wrapper);
+    // console.log('load fabulous', wrapper);
+  });
+}
+
+function loadCounter() {
+  loadObjAndMtl('obj/counter/', 'Cash machine retro N030114.obj', 'Cash machine retro N030114.obj.mtl', function (obj) {
+    obj.position.x = 300;
+    obj.position.z = -200;
+    obj.rotation.y = THREE.Math.degToRad(180);
+
+    scene.add(obj);
+    // console.log('load register', wrapper);
+  });
+}
+
 function loadObjectsAndAddToScene() {
   loadObjAndMtl('obj/male02/', 'male02.obj', 'male02_dds.mtl', function (obj) {
     obj.position.y = -95;
@@ -168,6 +195,9 @@ function loadObjectsAndAddToScene() {
   addFullShelfOfCereal(0);
   addFullShelfOfCereal(100);
   //addFullShelfOfCereal(200);
+
+  loadFabulous();
+  loadCounter();
 }
 loadObjectsAndAddToScene();
 
