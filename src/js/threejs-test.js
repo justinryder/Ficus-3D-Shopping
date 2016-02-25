@@ -84,6 +84,7 @@ function addShelfOfCereal(xOffset, yOffset) {
 }
 
 function addFullShelfOfCereal(xOffset) {
+  addShelf(xOffset);
   addShelfOfCereal(xOffset, -68);
   addShelfOfCereal(xOffset, -33);
   addShelfOfCereal(xOffset, 0);
@@ -104,12 +105,6 @@ function loadObjectsAndAddToScene() {
       cart.position.x = -20;
     });
   });
-
-  addShelf(-200);
-  addShelf(-100);
-  addShelf(0);
-  addShelf(100);
-  addShelf(200);
 
   //addFullShelfOfCereal(-200);
   addFullShelfOfCereal(-100);
