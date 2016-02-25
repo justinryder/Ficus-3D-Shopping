@@ -25,12 +25,18 @@
   position: relative;
   transition: 10ms linear;
   transform-style: preserve-3d;
-  // transform: rotateX(-20deg) rotateY(25deg);
+  box-shadow: 2px 0px 7px rgba(0, 0, 0, 0.7);
+  -webkit-transition: -webkit-transform 750ms linear;
+
+  &.productBox--focused {
+    box-shadow: none;
+  }
 
   .productBox__side {
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
+    background-color: #FFFFFF;
   }
 
   .productBox__side--front,

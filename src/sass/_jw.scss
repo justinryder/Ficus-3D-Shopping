@@ -9,6 +9,20 @@ html.jw {
     overflow: hidden;
   }
   
+  #order-info {
+    background-color: rgba(177, 121, 67, .65);
+    margin-left: 25px;
+    margin-top: 25px;
+    padding: 25px;
+    width: 300px;
+  }
+  
+  #order-info ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
   .backboard {
     background: url('/img/jw/woodgrain.png') 0% 0%;
     height:6000px;
