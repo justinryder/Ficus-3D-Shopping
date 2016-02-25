@@ -9,6 +9,13 @@ var gulp = require('gulp'),
 * build tasks
 */
 
+function buildAudio() {
+  return gulp.src('./src/audio/**/*')
+    .pipe(gulp.dest('./app/audio'));
+}
+
+gulp.task('build:audio', buildAudio);
+
 function buildCss() {
   return gulp.src('./src/sass/**/*.scss')
       .pipe(compass({
@@ -62,6 +69,7 @@ gulp.task('build:obj', buildObj)
 
 gulp.task('build', function () {
   return mergeStream(
+    buildAudio(),
     buildCss(),
     buildHtml(),
     buildImg(),
@@ -72,6 +80,12 @@ gulp.task('build', function () {
 /**
 * watch tasks
 */
+
+function watchAudio() {
+  gulp.watch('./src/audio/**/*', ['build:audio'])
+}
+
+gulp.task('watch:audio', watchAudio)
 
 function watchCss() {
   gulp.watch('./src/sass/**/*.scss', ['build:css'])
@@ -104,6 +118,7 @@ function watchObj() {
 gulp.task('watch:obj', watchObj)
 
 gulp.task('watch', function () {
+  watchAudio()
   watchCss()
   watchHtml()
   watchImg()

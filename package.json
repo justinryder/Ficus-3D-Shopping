@@ -25,11 +25,13 @@
   },
   "scripts": {
     "build": "gulp build",
+    "build:audio": "gulp build:audio",
     "build:css": "gulp build:css",
     "build:html": "gulp build:html",
     "build:js": "gulp build:js",
     "build:obj": "gulp build:obj",
     "watch": "gulp watch",
+    "watch:audio": "gulp watch:audio",
     "watch:css": "gulp watch:css",
     "watch:html": "gulp watch:html",
     "watch:js": "gulp watch:js",
