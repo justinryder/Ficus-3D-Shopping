@@ -46,7 +46,9 @@ Implemented by Patrick Mulcahy
 Assets by Thom Collins
 
 Built using CSS transforms
+
 Keyboard support with keymaster.js
+
 Touch support with hammer.js
 
 **Keyboard and Mouse**
