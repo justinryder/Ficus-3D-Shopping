@@ -46,9 +46,23 @@ Implemented by Patrick Mulcahy
 Assets by Thom Collins
 
 Built using CSS transforms
+Keyboard support with keymaster.js
+Touch support with hammer.js
 
-- Tap/click product to view it/put it back ont he shelf
-- Drag product that is viewed to rotate it
-- Pinch (shift + drag for non-touch) to zoom a viewed product
-- Swipe left/right to view other shelves
-- Shift + arrows to snap to a side of a viewed product
+## Keyboard and Mouse
+- click product to focus
+- click+drag on product to rotate
+- click+drag+left/right on page to move between shelves 
+- shift+click+drag - simulates pinch zoom
+- up, down, left, right - rotate product
+- shift+up, shift+down, shift+left, shift+right - "snap to" rotation
+- ctrl+up, ctrl+down, ctrl+left, ctrl+right - move product in view port along x and y axis
+- ctrl+[plus], ctrl+[minus] - zoom in or out
+- shift+enter - reset product state
+- esc - place product back on shelf
+
+## Touch
+- Tap product to focus
+- Pan on product to rotate
+- Pinch to zoom in and out on focused product
+- Swipe left/right to move between shelves
