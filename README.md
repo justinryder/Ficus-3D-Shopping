@@ -49,7 +49,7 @@ Built using CSS transforms
 Keyboard support with keymaster.js
 Touch support with hammer.js
 
-*Keyboard and Mouse*
+**Keyboard and Mouse**
 - click product to focus
 - click+drag on product to rotate
 - click+drag+left/right on page to move between shelves 
@@ -61,8 +61,9 @@ Touch support with hammer.js
 - shift+enter - reset product state
 - esc - place product back on shelf
 
-*Touch*
+**Touch**
 - Tap product to focus
+- Tap off product to place back on shelf
 - Pan on product to rotate
 - Pinch to zoom in and out on focused product
 - Swipe left/right to move between shelves
